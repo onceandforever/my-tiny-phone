@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <!-- 移动端死磕适配：禁止用户缩放，防止出现横向滚动条 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>我的迷你手机</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 全局背景容器：所有页面层都放在这里面 -->
+  <div id="app">
+
+    <!-- ============ 1. 桌面层（默认显示） ============ -->
+    <div id="desktop" class="app-page">
+      <!-- 状态栏：仿 iOS 顶部时间 + 信号/电量 -->
+      <div class="status-bar">
+        <span class="status-time">9:41</span>
+        <span class="status-icons">📶 🔋</span>
+      </div>
+
+      <!-- 桌面图标区 -->
+      <div class="desktop-grid">
+        <div class="app-icon">
+          <div class="icon-bg icon-chat">💬</div>
+          <span class="icon-name">聊天</span>
+        </div>
+        <div class="app-icon">
+          <div class="icon-bg icon-settings">⚙️</div>
+          <span class="icon-name">设置</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 2. 消息列表层（默认隐藏） ============ -->
+    <div id="chat-list" class="app-page hidden">
+      <!-- 顶部导航栏：返回键 + 标题 + 加号 -->
+      <div class="nav-bar">
+        <button class="nav-btn">‹</button>
+        <span class="nav-title">消息</span>
+        <button class="nav-btn">＋</button>
+      </div>
+
+      <!-- 联系人列表：3 个静态项 -->
+      <div class="list-wrap">
+        <div class="list-item">
+          <div class="avatar">🐱</div>
+          <div class="list-text">
+            <div class="list-name">小明</div>
+            <div class="list-preview">晚上一起吃饭吗？</div>
+          </div>
+          <span class="list-time">18:30</span>
+        </div>
+        <div class="list-item">
+          <div class="avatar">🐶</div>
+          <div class="list-text">
+            <div class="list-name">小红</div>
+            <div class="list-preview">作业借我抄一下哈哈</div>
+          </div>
+          <span class="list-time">17:05</span>
+        </div>
+        <div class="list-item">
+          <div class="avatar">🦊</div>
+          <div class="list-text">
+            <div class="list-name">社团群</div>
+            <div class="list-preview">[图片] 周末活动海报</div>
+          </div>
+          <span class="list-time">昨天</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 3. 聊天详情层（默认隐藏） ============ -->
+    <div id="chat-room" class="app-page hidden">
+      <!-- 顶部导航栏：返回键 + 对方名字 -->
+      <div class="nav-bar">
+        <button class="nav-btn">‹</button>
+        <span class="nav-title">小明</span>
+        <span class="nav-btn"></span><!-- 占位，保持标题居中 -->
+      </div>
+
+      <!-- 中间聊天区域：暂时空白，后面放消息气泡 -->
+      <div class="chat-area">
+        <!-- 消息气泡以后写在这里 -->
+      </div>
+
+      <!-- 底部输入框区域：毛玻璃效果 -->
+      <div class="input-bar">
+        <input type="text" class="chat-input" placeholder="输入消息…">
+        <button class="send-btn">发送</button>
+      </div>
+    </div>
+
+    <!-- ============ 4. 设置层（默认隐藏） ============ -->
+    <div id="settings" class="app-page hidden">
+      <!-- 顶部导航栏：返回键 + 设置 -->
+      <div class="nav-bar">
+        <button class="nav-btn">‹</button>
+        <span class="nav-title">设置</span>
+        <span class="nav-btn"></span><!-- 占位 -->
+      </div>
+
+      <!-- 设置列表：先放 1 个静态项 -->
+      <div class="list-wrap">
+        <div class="list-item">
+          <div class="avatar">👤</div>
+          <div class="list-text">
+            <div class="list-name">个人资料</div>
+            <div class="list-preview">查看并编辑个人信息</div>
+          </div>
+          <span class="list-arrow">›</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
