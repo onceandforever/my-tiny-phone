@@ -2,117 +2,114 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <!-- 移动端死磕适配：禁止用户缩放，防止出现横向滚动条 -->
+  <!-- 移动端适配：禁止缩放，保证全屏铺满 -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>我的迷你手机</title>
+  <title>AI 小手机</title>
+  <!-- 引用外部样式，禁止内联 CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- 全局背景容器：所有页面层都放在这里面 -->
-  <div id="app">
 
-    <!-- ============ 1. 桌面层（默认显示） ============ -->
-    <div id="desktop" class="app-page">
-      <!-- 状态栏：仿 iOS 顶部时间 + 信号/电量 -->
-      <div class="status-bar">
-        <span class="status-time">9:41</span>
-        <span class="status-icons">📶 🔋</span>
+  <!-- ========== 第 1 层：桌面 ========== -->
+  <div id="desktop" class="screen">
+    <div class="desktop-title">AI 小手机</div>
+
+    <!-- 两个 App 图标 -->
+    <div class="app-grid">
+      <!-- 点击后进入消息列表 -->
+      <div class="app" onclick="goTo('chat-list')">
+        <div class="app-icon icon-chat">💬</div>
+        <div class="app-name">聊天</div>
       </div>
 
-      <!-- 桌面图标区 -->
-      <div class="desktop-grid">
-        <div class="app-icon">
-          <div class="icon-bg icon-chat">💬</div>
-          <span class="icon-name">聊天</span>
-        </div>
-        <div class="app-icon">
-          <div class="icon-bg icon-settings">⚙️</div>
-          <span class="icon-name">设置</span>
-        </div>
+      <!-- 点击后进入设置 -->
+      <div class="app" onclick="goTo('settings')">
+        <div class="app-icon icon-setting">⚙️</div>
+        <div class="app-name">设置</div>
       </div>
     </div>
-
-    <!-- ============ 2. 消息列表层（默认隐藏） ============ -->
-    <div id="chat-list" class="app-page hidden">
-      <!-- 顶部导航栏：返回键 + 标题 + 加号 -->
-      <div class="nav-bar">
-        <button class="nav-btn">‹</button>
-        <span class="nav-title">消息</span>
-        <button class="nav-btn">＋</button>
-      </div>
-
-      <!-- 联系人列表：3 个静态项 -->
-      <div class="list-wrap">
-        <div class="list-item">
-          <div class="avatar">🐱</div>
-          <div class="list-text">
-            <div class="list-name">小明</div>
-            <div class="list-preview">晚上一起吃饭吗？</div>
-          </div>
-          <span class="list-time">18:30</span>
-        </div>
-        <div class="list-item">
-          <div class="avatar">🐶</div>
-          <div class="list-text">
-            <div class="list-name">小红</div>
-            <div class="list-preview">作业借我抄一下哈哈</div>
-          </div>
-          <span class="list-time">17:05</span>
-        </div>
-        <div class="list-item">
-          <div class="avatar">🦊</div>
-          <div class="list-text">
-            <div class="list-name">社团群</div>
-            <div class="list-preview">[图片] 周末活动海报</div>
-          </div>
-          <span class="list-time">昨天</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- ============ 3. 聊天详情层（默认隐藏） ============ -->
-    <div id="chat-room" class="app-page hidden">
-      <!-- 顶部导航栏：返回键 + 对方名字 -->
-      <div class="nav-bar">
-        <button class="nav-btn">‹</button>
-        <span class="nav-title">小明</span>
-        <span class="nav-btn"></span><!-- 占位，保持标题居中 -->
-      </div>
-
-      <!-- 中间聊天区域：暂时空白，后面放消息气泡 -->
-      <div class="chat-area">
-        <!-- 消息气泡以后写在这里 -->
-      </div>
-
-      <!-- 底部输入框区域：毛玻璃效果 -->
-      <div class="input-bar">
-        <input type="text" class="chat-input" placeholder="输入消息…">
-        <button class="send-btn">发送</button>
-      </div>
-    </div>
-
-    <!-- ============ 4. 设置层（默认隐藏） ============ -->
-    <div id="settings" class="app-page hidden">
-      <!-- 顶部导航栏：返回键 + 设置 -->
-      <div class="nav-bar">
-        <button class="nav-btn">‹</button>
-        <span class="nav-title">设置</span>
-        <span class="nav-btn"></span><!-- 占位 -->
-      </div>
-
-      <!-- 设置列表：先放 1 个静态项 -->
-      <div class="list-wrap">
-        <div class="list-item">
-          <div class="avatar">👤</div>
-          <div class="list-text">
-            <div class="list-name">个人资料</div>
-            <div class="list-preview">查看并编辑个人信息</div>
-          </div>
-          <span class="list-arrow">›</span>
-        </div>
-      </div>
-    </div>
-
   </div>
+
+  <!-- ========== 第 2 层：消息列表 ========== -->
+  <div id="chat-list" class="screen hidden">
+    <!-- 顶部导航栏 -->
+    <div class="navbar">
+      <div class="nav-back" onclick="goBack('desktop')">‹ 返回</div>
+      <div class="nav-title">消息</div>
+      <div class="nav-right"></div>
+    </div>
+
+    <!-- 联系人列表（静态假数据） -->
+    <div class="list">
+      <div class="list-item" onclick="goTo('chat-room')">
+        <div class="avatar">A</div>
+        <div class="item-body">
+          <div class="item-name">小橙 AI</div>
+          <div class="item-msg">今天过得怎么样？</div>
+        </div>
+      </div>
+
+      <div class="list-item" onclick="goTo('chat-room')">
+        <div class="avatar">B</div>
+        <div class="item-body">
+          <div class="item-name">小蓝 AI</div>
+          <div class="item-msg">我帮你记下来了～</div>
+        </div>
+      </div>
+
+      <div class="list-item" onclick="goTo('chat-room')">
+        <div class="avatar">C</div>
+        <div class="item-body">
+          <div class="item-name">小绿 AI</div>
+          <div class="item-msg">明天见！</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 第 3 层：聊天详情 ========== -->
+  <div id="chat-room" class="screen hidden">
+    <div class="navbar">
+      <div class="nav-back" onclick="goBack('chat-list')">‹ 返回</div>
+      <div class="nav-title">小橙 AI</div>
+      <div class="nav-right"></div>
+    </div>
+
+    <!-- 消息区域：静态假气泡 -->
+    <div class="msg-area">
+      <div class="bubble bubble-left">你好呀，我是小橙。</div>
+      <div class="bubble bubble-right">你好，测试一下界面。</div>
+      <div class="bubble bubble-left">界面骨架已经跑通了，下一步可以接 AI 了。</div>
+      <div class="bubble bubble-right">收到，V1.0 只做静态 UI。</div>
+    </div>
+
+    <!-- 底部输入区 -->
+    <div class="input-bar">
+      <input class="input-box" type="text" placeholder="说点什么…">
+      <button class="send-btn">发送</button>
+    </div>
+  </div>
+
+  <!-- ========== 第 4 层：设置 ========== -->
+  <div id="settings" class="screen hidden">
+    <div class="navbar">
+      <div class="nav-back" onclick="goBack('desktop')">‹ 返回</div>
+      <div class="nav-title">设置</div>
+      <div class="nav-right"></div>
+    </div>
+
+    <!-- 设置项预留空白 -->
+    <div class="list">
+      <div class="list-item">
+        <div class="item-body">
+          <div class="item-name">设置项占位</div>
+          <div class="item-msg">后续版本再加内容</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 引用外部脚本，禁止内联 JS -->
+  <script src="app.js"></script>
 </body>
 </html>
