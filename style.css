@@ -1,4 +1,4 @@
-/* ===== 基础设置 ===== */
+/* ===== 全局重置：去掉默认边距，禁止横向滚动 ===== */
 * {
   margin: 0;
   padding: 0;
@@ -8,57 +8,238 @@
 html, body {
   width: 100%;
   height: 100%;
-  overflow: hidden; /* 禁止滚动条 */
-  font-family: -apple-system, "PingFang SC", sans-serif;
-  color: #fff;
+  overflow: hidden;              /* 禁止横向/纵向滚动条 */
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: #000;
+  -webkit-tap-highlight-color: transparent;  /* 取消点击蓝色高亮 */
 }
 
-/* ===== 全屏星空/深色渐变背景 ===== */
-#app {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(160deg, #0b1026, #1b2a4a, #4b3f72);
-  position: relative;
-}
-
-/* ===== 每个页面层占满全屏 ===== */
-.app-page {
-  position: absolute;
+/* ===== 每一层屏幕：全屏铺满 ===== */
+.screen {
+  position: fixed;               /* 固定定位，叠在一起 */
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #f2f2f7;
 }
 
-/* ===== 隐藏其他页面，只显示桌面 ===== */
-#chat-list,
-#chat-room,
-#settings {
-  display: none;
+/* 关键：隐藏类。谁加了 hidden 谁就消失 */
+.hidden {
+  display: none !important;
 }
 
-/* ===== 桌面图标：横向排列、圆角、间距 ===== */
-.desktop-grid {
-  display: flex;          /* 横向排列 */
-  gap: 20px;              /* 图标之间的间距 */
-  padding: 60px 20px;
+/* ===== 桌面层背景：深色渐变 ===== */
+#desktop {
+  background: linear-gradient(160deg, #1c1c2e 0%, #2d2d4a 50%, #0f0f1a 100%);
+  align-items: center;
+  padding-top: 80px;
 }
 
-.icon-bg {
-  width: 60px;
-  height: 60px;
-  border-radius: 16px;    /* 圆角 */
-  background: rgba(255, 255, 255, 0.15);
+.desktop-title {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 40px;
+  letter-spacing: 2px;
+}
+
+/* 图标排列容器 */
+.app-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  justify-content: center;
+  width: 100%;
+  padding: 0 30px;
+}
+
+.app {
+  width: 72px;
+  text-align: center;
+}
+
+.app-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 18px;           /* 圆角 App 图标 */
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 28px;
+  font-size: 34px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, .35);
+  transition: transform .12s;    /* 按下缩放动效 */
 }
 
-/* ===== 图标下的文字：白色 ===== */
-.icon-name {
-  color: #fff;
+/* 手指按下时轻微缩小，模拟 iOS 手感 */
+.app:active .app-icon {
+  transform: scale(.9);
+}
+
+.icon-chat {
+  background: linear-gradient(180deg, #4facfe, #0a84ff);
+}
+
+.icon-setting {
+  background: linear-gradient(180deg, #c9c9ce, #8e8e93);
+}
+
+.app-name {
+  margin-top: 8px;
   font-size: 12px;
+  color: #fff;
+}
+
+/* ===== 顶部导航栏 ===== */
+.navbar {
+  height: 50px;
+  flex-shrink: 0;                /* 不被压缩 */
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-bottom: 1px solid #e5e5ea;
+  padding: 0 10px;
+}
+
+.nav-back {
+  width: 70px;
+  font-size: 15px;
+  color: #0a84ff;
+  cursor: pointer;
+}
+
+.nav-title {
+  flex: 1;
   text-align: center;
-  margin-top: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #111;
+}
+
+.nav-right {
+  width: 70px;                   /* 左右等宽，标题才真居中 */
+}
+
+/* ===== 列表区域 ===== */
+.list {
+  flex: 1;
+  overflow-y: auto;              /* 只在内部竖向滚动 */
+  background: #fff;
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 14px;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+}
+
+.list-item:active {
+  background: #f2f2f7;
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #0a84ff;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.item-body {
+  flex: 1;
+  min-width: 0;                  /* 允许文字省略 */
+}
+
+.item-name {
+  font-size: 15px;
+  color: #111;
+  margin-bottom: 3px;
+}
+
+.item-msg {
+  font-size: 13px;
+  color: #8e8e93;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ===== 聊天详情 ===== */
+.msg-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px;
+  background: #f2f2f7;
+}
+
+.bubble {
+  max-width: 72%;
+  padding: 9px 13px;
+  border-radius: 16px;
+  font-size: 15px;
+  line-height: 1.45;
+  margin-bottom: 10px;
+  word-break: break-word;
+}
+
+.bubble-left {
+  background: #fff;
+  color: #111;
+  border-bottom-left-radius: 4px;
+}
+
+.bubble-right {
+  background: #0a84ff;
+  color: #fff;
+  margin-left: auto;             /* 靠右 */
+  border-bottom-right-radius: 4px;
+}
+
+/* ===== 底部输入栏 ===== */
+.input-bar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: #fff;
+  border-top: 1px solid #e5e5ea;
+  padding-bottom: calc(8px + env(safe-area-inset-bottom)); /* 适配刘海屏 */
+}
+
+.input-box {
+  flex: 1;
+  height: 36px;
+  border: none;
+  outline: none;
+  border-radius: 18px;
+  background: #f2f2f7;
+  padding: 0 14px;
+  font-size: 15px;
+}
+
+.send-btn {
+  height: 36px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 18px;
+  background: #0a84ff;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.send-btn:active {
+  opacity: .7;
 }
